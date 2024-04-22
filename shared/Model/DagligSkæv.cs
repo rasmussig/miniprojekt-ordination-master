@@ -23,7 +23,8 @@ public class DagligSkæv : Ordination {
 
 	public override double doegnDosis() {
 		// TODO: Implement!
-        return -1;
+		double doegnDosis = (double)doser.Count() / base.antalDage();
+        return doegnDosis;
 	}
 
 	public override String getType() {

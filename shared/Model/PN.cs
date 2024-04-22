@@ -18,14 +18,45 @@ public class PN : Ordination {
     /// </summary>
     public bool givDosis(Dato givesDen) {
         // TODO: Implement!
+
+        if (givesDen.dato >= startDen && givesDen.dato <= slutDen) {
+            dates.Add(givesDen);
+            return true;
+        }
+
         return false;
     }
 
+    /**
+    (antal gange ordinationen er anvendt * antal enheder) / (antal dage mellem første og sidste givning)
+    */
+
     public override double doegnDosis() {
     	// TODO: Implement!
-        return -1;
-    }
 
+        // find min og max i dates i et loop
+        if (dates.Count() > 0) {
+            DateTime min = dates[0].dato;
+            DateTime max = dates[0].dato;
+
+            foreach (Dato dato in dates) {
+                if (dato.dato < min) {
+                    min = dato.dato;
+                }
+
+                if (dato.dato > max) {
+                    max = dato.dato;
+                }
+            }
+
+            TimeSpan span = max - min;
+            return (dates.Count() * antalEnheder) / span.TotalDays + 1;
+        }
+
+        // hvis der ikke er nogen givninger
+
+        return 0;
+    }
 
     public override double samletDosis() {
         return dates.Count() * antalEnheder;

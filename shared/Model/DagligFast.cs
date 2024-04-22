@@ -1,4 +1,6 @@
 namespace shared.Model;
+
+using System.Xml.Schema;
 using static shared.Util;
 
 public class DagligFast : Ordination {
@@ -25,7 +27,7 @@ public class DagligFast : Ordination {
 
 	public override double doegnDosis() {
 		// TODO: Implement!
-        return -1;
+		return MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;	
 	}
 	
 	public Dosis[] getDoser() {
