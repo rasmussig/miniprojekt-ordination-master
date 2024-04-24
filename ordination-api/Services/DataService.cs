@@ -229,8 +229,6 @@ public class DataService
 
     public string AnvendOrdination(int id, Dato dato)
     {
-        // TODO: Implement!
-
         PN pn = db.PNs.Find(id);
 
         if (pn == null)
@@ -238,9 +236,13 @@ public class DataService
             throw new ArgumentException("Ordination findes ikke");
         }
 
-        pn.givDosis(dato);
+        if (pn.givDosis(dato))
+        {
+            db.SaveChanges();
+            return "Ordination anvendt";
+        }
 
-        return "Ordination anvendt";
+        return "Ordination kunne ikke anvendes";
     }
 
     /// <summary>
