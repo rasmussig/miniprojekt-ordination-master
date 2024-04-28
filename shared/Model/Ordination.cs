@@ -25,8 +25,7 @@ public abstract class Ordination
     public int antalDage()
     {
         TimeSpan span = slutDen - startDen;
-        Console.WriteLine(span.TotalDays); // check hvad den giver i console
-        return (int)span.TotalDays;
+        return (int)span.TotalDays + 1;
     }
 
     public override String ToString()
