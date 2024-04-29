@@ -16,7 +16,7 @@ public class ServiceTest
     public void SetupBeforeEachTest()
     {
         var optionsBuilder = new DbContextOptionsBuilder<OrdinationContext>();
-        optionsBuilder.UseInMemoryDatabase(databaseName: "test-database");
+        optionsBuilder.UseInMemoryDatabase(databaseName: $"test-database-{DateTime.UtcNow.Ticks}");
         var context = new OrdinationContext(optionsBuilder.Options);
         service = new DataService(context);
         service.SeedData();
@@ -165,16 +165,48 @@ public class ServiceTest
             new DateTime(2024, 1, 3), new DateTime(2024, 1, 1));
     }
 
+
+    // Test af oprettelse af en ny PN
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void TestAtKodenSmiderEnException()
+    public void OpretPN_TC1()
     {
-        // Herunder skal man så kalde noget kode,
-        // der smider en exception.
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
 
-        // Hvis koden _ikke_ smider en exception,
-        // så fejler testen.
+        Assert.AreEqual(4, service.GetPNs().Count());
 
-        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+        service.OpretPN(patient.PatientId, lm.LaegemiddelId, 10, new DateTime(2024, 1, 1), new DateTime(2024, 1, 1));
+
+        Assert.AreEqual(5, service.GetPNs().Count());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void OpretPN_TC2()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+
+        service.OpretPN(patient.PatientId, lm.LaegemiddelId, 0, new DateTime(2024, 1, 1), new DateTime(2024, 1, 1));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void OpretPN_TC3()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+
+        service.OpretPN(patient.PatientId, lm.LaegemiddelId, -10, new DateTime(2024, 1, 1), new DateTime(2024, 1, 1));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void OpretPN_TC4()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+
+        service.OpretPN(patient.PatientId, lm.LaegemiddelId, 10, new DateTime(2024, 1, 3), new DateTime(2024, 1, 1));
     }
 }

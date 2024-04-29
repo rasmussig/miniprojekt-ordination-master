@@ -145,10 +145,22 @@ public class DataService
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        // yeeter en exception hvis patient eller laegemiddel ikke findes
+        // Kaster en exception hvis patient eller laegemiddel ikke findes
         if (patient == null || laegemiddel == null)
         {
             throw new ArgumentException("Patient eller lægemiddel findes ikke");
+        }
+
+        // Kaster en exception hvis antal er 0 eller negativt
+        if (antal == 0 || antal < 0)
+        {
+            throw new ArgumentException("Antal skal være større end 0");
+        }
+
+        // Kaster en exception hvis startdato er efter slutdato
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Startdato skal være før slutdato");
         }
 
         // opretter en ny ordination
@@ -231,7 +243,7 @@ public class DataService
         }
 
         // Kaster en exception hvis der ikke er nogen dosis
-        if (doser.Length == 0)
+        if (doser.Length == 0 )
         {
             throw new ArgumentException("Der skal være mindst en dosis");
         }
