@@ -63,9 +63,9 @@ public class PN : Ordination
             }
         }
 
-        // Beregner det totale antal dage fra den første til den sidste dosis inklusive begge dage
-        TimeSpan span = max - min;
-        double totalDage = span.TotalDays + 1;
+        // Beregner det totale antal hele dage fra den første til den sidste dosis
+        // Tilføjer 1 for at inkludere både start og slut datoer, hvis forskellige
+        int totalDage = (max - min).Days + 1;
 
         // Antager at 'antalEnheder' repræsenterer antallet af enheder givet ved hver administration
         double samletGangeGivet = dates.Count;
