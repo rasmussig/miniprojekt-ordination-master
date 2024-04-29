@@ -10,12 +10,7 @@ public class DagligSkæv : Ordination
 
 	public DagligSkæv(DateTime startDen, DateTime slutDen, Laegemiddel laegemiddel, Dosis[] doser) : base(laegemiddel, startDen, slutDen)
 	{
-		// Validering af input
-		if (doser.Length == 0)
-			throw new ArgumentException("DagligSkæv skal have mindst en dosis.");
-
 		this.doser = doser.ToList();
-
 	}
 
 	public DagligSkæv() : base(null!, new DateTime(), new DateTime())
@@ -24,10 +19,6 @@ public class DagligSkæv : Ordination
 
 	public void opretDosis(DateTime tid, double antal)
 	{
-		// Validering af input
-		if (antal < 0)
-			throw new ArgumentException("Antal doser må ikke være negativt.");
-
 		doser.Add(new Dosis(tid, antal));
 	}
 

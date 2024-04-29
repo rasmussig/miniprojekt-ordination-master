@@ -13,13 +13,6 @@ public class DagligFast : Ordination
 
 	public DagligFast(DateTime startDen, DateTime slutDen, Laegemiddel laegemiddel, double morgenAntal, double middagAntal, double aftenAntal, double natAntal) : base(laegemiddel, startDen, slutDen)
 	{
-		// Tjekker om dosis værdier er negative
-		if (morgenAntal < 0 || middagAntal < 0 || aftenAntal < 0 || natAntal < 0)
-			throw new ArgumentException("Dosis værdier må ikke være negative.");
-		// Tjekker om mindst en dosis er større end 0
-		if (morgenAntal == 0 && middagAntal == 0 && aftenAntal == 0 && natAntal == 0)
-			throw new ArgumentException("Mindst en dosis skal være større end 0.");
-
 		MorgenDosis = new Dosis(CreateTimeOnly(6, 0, 0), morgenAntal);
 		MiddagDosis = new Dosis(CreateTimeOnly(12, 0, 0), middagAntal);
 		AftenDosis = new Dosis(CreateTimeOnly(18, 0, 0), aftenAntal);

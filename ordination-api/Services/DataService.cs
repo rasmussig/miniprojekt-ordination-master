@@ -175,10 +175,28 @@ public class DataService
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        // yeeter en exception hvis patient eller laegemiddel ikke findes
+        // Kaster en exception hvis patient eller laegemiddel ikke findes
         if (patient == null || laegemiddel == null)
         {
             throw new ArgumentException("Patient eller lægemiddel findes ikke");
+        }
+
+        // Kaster en exception hvis der ikke er nogen dosis
+        if (antalMorgen == 0 && antalMiddag == 0 && antalAften == 0 && antalNat == 0)
+        {
+            throw new ArgumentException("Der skal være mindst en dosis");
+        }
+
+        // Kaster en exception hvis der er negative doser
+        if(antalMorgen < 0 || antalMiddag < 0 || antalAften < 0 || antalNat < 0)
+        {
+            throw new ArgumentException("Der kan ikke være negative doser");
+        }
+
+        // Kaster en exception hvis startdato er efter slutdato
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Startdato skal være før slutdato");
         }
 
         // opretter en ny ordination
@@ -206,10 +224,31 @@ public class DataService
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        // yeeter en exception hvis patient eller laegemiddel ikke findes
+        // Kaster en exception hvis patient eller laegemiddel ikke findes
         if (patient == null || laegemiddel == null)
         {
             throw new ArgumentException("Patient eller lægemiddel findes ikke");
+        }
+
+        // Kaster en exception hvis der ikke er nogen dosis
+        if (doser.Length == 0)
+        {
+            throw new ArgumentException("Der skal være mindst en dosis");
+        }
+
+        // Kaster en exception hvis der er negative doser
+        foreach (Dosis dosis in doser)
+        {
+            if (dosis.antal < 0)
+            {
+                throw new ArgumentException("Der kan ikke være negative doser");
+            }
+        }
+
+        // Kaster en exception hvis startdato er efter slutdato
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Startdato skal være før slutdato");
         }
 
         // opretter en ny ordination
