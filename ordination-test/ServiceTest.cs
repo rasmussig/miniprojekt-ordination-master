@@ -209,4 +209,73 @@ public class ServiceTest
 
         service.OpretPN(patient.PatientId, lm.LaegemiddelId, 10, new DateTime(2024, 1, 3), new DateTime(2024, 1, 1));
     }
+
+    // Test af metoden GetAnbefaletDosisPerDøgn
+    [TestMethod]
+    public void GetAnbefaletDosisPerDøgn_TC1()
+    {
+        Patient patient = service.GetPatienter().First(); // Jane Jensen
+        Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsaicylsyre
+
+            Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+            Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+
+        double result = service.GetAnbefaletDosisPerDøgn(patient.PatientId, lm.LaegemiddelId);
+
+        Assert.AreEqual(63.4 * 0.15, result);
+    }
+
+    [TestMethod]
+    public void GetAnbefaletDosisPerDøgn_TC2()
+    {
+        Patient patient = service.GetPatienter().First(); // Jane Jensen
+        Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsalicylsyre
+    
+                Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+                Assert.AreEqual("Acetylsaicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+
+        // Sæt Jane Jensens vægt til 20 kg
+        patient.vaegt = 20;
+
+        double result = service.GetAnbefaletDosisPerDøgn(patient.PatientId, lm.LaegemiddelId);
+
+        Assert.AreEqual(20 * 0.1, result);
+    }
+
+    [TestMethod]
+    public void GetAnbefaletDosisPerDøgn_TC3()
+    {
+        Patient patient = service.GetPatienter().First(); // Jane Jensen
+        Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsalicylsyre
+
+            Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+            Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+
+        // Sæt Jane Jensens vægt til 130 kg
+        patient.vaegt = 130;
+
+        double result = service.GetAnbefaletDosisPerDøgn(patient.PatientId, lm.LaegemiddelId);
+
+        Assert.AreEqual(130 * 0.16, result);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GetAnbefaletDosisPerDøgn_TC4()
+    {
+        Patient patient = service.GetPatienter().First(); // Jane Jensen
+
+        service.GetAnbefaletDosisPerDøgn(patient.PatientId, 0);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GetAnbefaletDosisPerDøgn_TC5()
+    {
+        Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsalicylsyre
+
+        service.GetAnbefaletDosisPerDøgn(0, lm.LaegemiddelId);
+    }
+
+
 }

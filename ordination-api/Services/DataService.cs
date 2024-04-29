@@ -316,7 +316,7 @@ public class DataService
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        // yeeter en exception hvis patient eller laegemiddel ikke findes
+        // Kaster en exception hvis patient eller laegemiddel ikke findes
         if (patient == null || laegemiddel == null)
         {
             throw new ArgumentException("Patient eller lægemiddel findes ikke");
