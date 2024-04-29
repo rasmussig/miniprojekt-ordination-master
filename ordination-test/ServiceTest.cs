@@ -217,8 +217,8 @@ public class ServiceTest
         Patient patient = service.GetPatienter().First(); // Jane Jensen
         Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsaicylsyre
 
-            Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
-            Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+        Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+        Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
 
         double result = service.GetAnbefaletDosisPerDøgn(patient.PatientId, lm.LaegemiddelId);
 
@@ -230,9 +230,9 @@ public class ServiceTest
     {
         Patient patient = service.GetPatienter().First(); // Jane Jensen
         Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsalicylsyre
-    
-                Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
-                Assert.AreEqual("Acetylsaicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+
+        Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+        Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
 
         // Sæt Jane Jensens vægt til 20 kg
         patient.vaegt = 20;
@@ -248,8 +248,8 @@ public class ServiceTest
         Patient patient = service.GetPatienter().First(); // Jane Jensen
         Laegemiddel lm = service.GetLaegemidler().Last(); // Acetylsalicylsyre
 
-            Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
-            Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
+        Assert.AreEqual("Jane Jensen", patient.navn, "Forkert patient hentet.");
+        Assert.AreEqual("Acetylsalicylsyre", lm.navn, "Forkert lægemiddel hentet.");
 
         // Sæt Jane Jensens vægt til 130 kg
         patient.vaegt = 130;
